@@ -1,0 +1,16 @@
+#Slot you want to check for example: hotbar has slot from 0-9
+slot:
+  start: 0
+  end: 9
+#if lore or display name is none, this item don't have lore or display name
+itemlist:
+  STICK:
+    lore: "none"
+    displayname: "none"
+    nametag: "none"
+# if player has one of these item above do a command
+command:
+  - "say %player bruh"
+# if set to true this plugin will always check all item of a player each 1 second
+auto-check: false
+message: "&5You don't have permission"

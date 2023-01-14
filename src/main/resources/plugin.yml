@@ -1,0 +1,19 @@
+name: ItemInventory
+version: '${project.version}'
+main: me.iteminventory.ItemInventory
+authors: [ FIP ]
+description: Idk
+api-version: 1.13
+commands:
+  iteminventory:
+    description: iteminventory
+permissions:
+  iteminventory:
+    default: op
+    children:
+      iteminventory.reload:
+        description: reload config
+        default: op
+      iteminventory.check:
+        description: check all player
+        default: op
