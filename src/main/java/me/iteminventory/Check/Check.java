@@ -9,8 +9,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 public class Check {
@@ -28,6 +26,7 @@ public class Check {
             }
         }.runTaskTimer(plugin, 20, 20);
     }
+
     public void check1() {
         Set<String> all = plugin.getConfig().getConfigurationSection("itemlist").getKeys(false);
         for (String idk : all) {
@@ -40,7 +39,6 @@ public class Check {
                     lore.add(plugin.getConfig().getString("itemlist." + idk + ".lore"));
                     meta.setLore(lore);
                     meta.setDisplayName(plugin.getConfig().getString("itemlist." + idk + ".displayname"));
-                    meta.setLocalizedName(plugin.getConfig().getString("itemlist." + idk + ".nametag"));
                     String lore1 = plugin.getConfig().getString("itemlist." + idk + ".lore");
                     if (lore1.equalsIgnoreCase("none")) {
                         meta.setLore(null);
@@ -50,11 +48,6 @@ public class Check {
                     if (displayename1.equalsIgnoreCase("none")) {
                         meta.setDisplayName(null);
                         lore.remove(displayename1);
-                    }
-                    String nametag = plugin.getConfig().getString("itemlist." + idk + ".nametag");
-                    if (nametag.equalsIgnoreCase("none")) {
-                        meta.setLocalizedName(null);
-                        lore.remove(nametag);
                     }
                     i.setItemMeta(meta);
                     lore.clear();
@@ -72,52 +65,66 @@ public class Check {
                     }
                 }
             } catch (Exception e) {
-                Bukkit.getConsoleSender().sendMessage("[ItemInventory] wtf is item " + idk + " is set in config");
+
             }
         }
     }
+
     public boolean hasItem(Player p, ItemStack item) {
         for (int i = plugin.getConfig().getInt("slot.start"); i <= plugin.getConfig().getInt("slot.end"); i++) {
-            //Check if item in each slot of inventory equal to item
-
-            if (p.getInventory().getStorageContents()[i].getType().equals(item.getType())) {
-                if (item.getItemMeta().hasLore() && item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLocalizedName()) {
-                    if (p.getInventory().getStorageContents()[i].getItemMeta().getLore().equals(item.getItemMeta().getLore()) && p.getInventory().getStorageContents()[i].getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName()) && p.getInventory().getStorageContents()[i].getItemMeta().getLocalizedName().equals(item.getItemMeta().getLocalizedName())) {
-                        return true;
-                    }
+            ItemStack i1 = p.getInventory().getItem(i);
+            //if (i1.getType() == null || i1.getType() != item.getType()) continue;
+            int slot = p.getInventory().first(i1);
+            if (slot == i) {
+                if (isEqual(i1, item)) {
+                    return true;
                 }
-                if (item.getItemMeta().hasLore()) {
-                    if (p.getInventory().getStorageContents()[i].getItemMeta().getLore().equals(item.getItemMeta().getLore())) {
-                        if (!(item.getItemMeta().hasDisplayName()) && item.getItemMeta().hasLocalizedName()) {
-                            if (p.getInventory().getStorageContents()[i].getItemMeta().getLocalizedName().equals(item.getItemMeta().getLocalizedName())) {
-                                return true;
-                            }
-                        }
-                        if (!(item.getItemMeta().hasLocalizedName()) && item.getItemMeta().hasDisplayName()) {
-                            if (p.getInventory().getStorageContents()[i].getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName())) {
-                                return true;
-                            }
-                        }
-                        return true;
-                    }
-                }
-                if (item.getItemMeta().hasDisplayName()) {
-                    if (p.getInventory().getStorageContents()[i].getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName())) {
-                        if (item.getItemMeta().hasLocalizedName()) {
-                            if (p.getInventory().getStorageContents()[i].getItemMeta().getLocalizedName().equals(item.getItemMeta().getLocalizedName())) {
-                                return true;
-                            }
-                        }
-                        return true;
-                    }
-                }
-                if (item.getItemMeta().hasLocalizedName()) {
-                    if (p.getInventory().getStorageContents()[i].getItemMeta().getLocalizedName().equals(item.getItemMeta().getLocalizedName())) {
-                        return true;
-                    }
-                }
-                return true;
             }
+        }
+        return false;
+    }
+    public boolean isEqual(ItemStack i1, ItemStack i2) {
+        if (i1.getType().equals(i2.getType())) {
+            if (i2.getItemMeta().hasLore()) {
+                if (!(i1.getItemMeta().hasLore())) {
+                    return false;
+                }
+                if (i1.getItemMeta().getLore().equals(i2.getItemMeta().getLore())) {
+                    if (i2.getItemMeta().hasDisplayName()) {
+                        if (!(i1.getItemMeta().hasDisplayName())) {
+                            return false;
+                        }
+                        if (i1.getItemMeta().getDisplayName().equals(i2.getItemMeta().getDisplayName())) {
+                            return true;
+                        }
+                    }
+                    if (i1.getItemMeta().hasDisplayName()) {
+                        if (!(i2.getItemMeta().hasDisplayName())) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            if (i1.getItemMeta().hasLore()) {
+                if(!(i2.getItemMeta().hasLore())) {
+                    return false;
+                }
+            }
+            if (i1.getItemMeta().hasDisplayName()) {
+                if (!(i2.getItemMeta().hasDisplayName())) {
+                    return false;
+                }
+            }
+            if (i2.getItemMeta().hasDisplayName()) {
+                if (!(i1.getItemMeta().hasDisplayName())) {
+                    return false;
+                }
+                if (i1.getItemMeta().getDisplayName().equals(i2.getItemMeta().getDisplayName())) {
+                    return true;
+                }
+            }
+            return true;
         }
         return false;
     }
