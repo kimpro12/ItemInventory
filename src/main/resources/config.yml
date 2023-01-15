@@ -12,7 +12,8 @@ itemlist:
     displayname: "test"
 # if player has one of these item above do a command
 command:
-  - "say %player bruh"
+  - "say %player test"
+  - "say %op %item"
 # if set to true this plugin will always check all item of a player each 1 second
 auto-check: false
 message: "&5You don't have permission"
