@@ -37,7 +37,7 @@ public class command implements CommandExecutor {
             if (p.hasPermission("iteminventory")) {
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("help")) {
-                        p.sendMessage(ChatColor.AQUA + "[ItemInventory] -------------------------Plugin made by FIP----------------------------");
+                        p.sendMessage(ChatColor.AQUA + "[ItemInventory] --------------Plugin made by FIP--------------");
                         p.sendMessage(ChatColor.AQUA + "[ItemInventory] /iteminventory check to check all player if has a custom item in config");
                         p.sendMessage(ChatColor.AQUA + "[ItemInventory] /iteminventory reload to reload config");
                     }

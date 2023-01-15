@@ -1,13 +1,15 @@
-#Slot you want to check for example: hotbar has slot from 0-9
+#Slot you want to check for example: hotbar has slot from 0-8
 slot:
   start: 0
-  end: 9
+  end: 8
 #if lore or display name is none, this item don't have lore or display name
 itemlist:
   STICK:
     lore: "none"
-    displayname: "none"
-    nametag: "none"
+    displayname: "test"
+  STONE:
+    lore: "none"
+    displayname: "test"
 # if player has one of these item above do a command
 command:
   - "say %player bruh"

@@ -16,6 +16,8 @@ public final class ItemInventory extends JavaPlugin {
             new Check(this).check();
         }
         new command(this);
+        int pluginId = 17409; // <-- Replace with the id of your plugin!
+        Metrics metrics = new Metrics(this, pluginId);
     }
 
     @Override
